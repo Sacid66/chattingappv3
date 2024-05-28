@@ -57,7 +57,7 @@ def on_join(data):
     color = random.choice(colors)
     join_room(room_id)
     rooms[room_id]['users'].append({'username': username, 'color': color})
-    send({'msg': f'{username} has joined the room.', 'username': 'Sistem', 'color': '#000000'}, room=room_id)
+    send({'msg': f'{username} has joined the room.', 'username': 'System', 'color': '#000000'}, room=room_id)
     emit('user_color', {'username': username, 'color': color}, room=request.sid)
 
 @socketio.on('message')
