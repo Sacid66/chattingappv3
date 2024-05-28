@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_cors import CORS
-from flask_session import Session
-import redis
 import random
 import string
 
@@ -11,14 +9,9 @@ CORS(app)
 
 # Configurations
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SESSION_TYPE'] = 'redis'
-app.config['SESSION_PERMANENT'] = False
-app.config['SESSION_USE_SIGNER'] = True
-app.config['SESSION_REDIS'] = redis.from_url('redis://localhost:6379')
 
 # Session and SocketIO setup
-server_session = Session(app)
-socketio = SocketIO(app, manage_session=False, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 rooms = {}
 colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#33FFF3', '#F3FF33', '#A833FF', '#FF8333']
