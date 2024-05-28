@@ -1,3 +1,7 @@
+from flask_cors import CORS
+app = Flask(__name__)
+CORS(app)
+
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 import random
