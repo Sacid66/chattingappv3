@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            Room: <span id="room-num">{{ room_id }}</span>
+        </div>
+        <div id="chat-box" class="chat-box"></div>
+        <div id="typing-indicator"></div>
+        <img id="image-preview" alt="Image Preview">
+        <video id="video-preview" controls style="display: none;"></video>
+        <form id="chat-form">
+            <input id="message" type="text" placeholder="Enter message">
+            <button id="camera-button" type="button">
+                <img src="{{ url_for('static', filename='0.png') }}" alt="Camera">
+            </button>
+            <button id="send-button" type="submit">Send</button>
+            <input type="file" id="media-input" accept="image/*,video/*" style="display: none;">
+        </form>
+    </div>
+    <div class="user-info" id="user-info">
+        <!-- Kullanıcı bilgileri burada dinamik olarak eklenecek -->
+    </div>
+    <script>
+        var socket = io();
+        var room = "{{ room_id }}";
+        var username = "{{ username }}";
+        var userColor;
+        var selectedImage;
+        var selectedVideo;
+        var typing = false;
+        var timeout;
+
+        socket.emit('join', {'room': room, 'username': username});
+
+        socket.on('message', function(data) {
+            var chatBox = document.getElementById('chat-box');
+            var messageElement = document.createElement('div');
+            var strongClass = data.username === 'Sistem' ? 'system' : '';
+            var colon = data.username !== 'Sistem' ? '<span class="colon">:</span>' : '';
+            if (data.image) {
+                messageElement.innerHTML = `<strong class="${strongClass}" style="color:${data.color}">${data.username}</strong>${colon}<img src="${data.image}" alt="Image" style="max-width: 200px; border-radius: 5px; vertical-align: middle;">`;
+            } else if (data.video) {
+                messageElement.innerHTML = `<strong class="${strongClass}" style="color:${data.color}">${data.username}</strong>${colon}<video src="${data.video}" controls style="max-width: 200px; border-radius: 5px; vertical-align: middle;"></video>`;
+            } else {
+                messageElement.innerHTML = `<strong class="${strongClass}" style="color:${data.color}">${data.username}</strong>${colon}<span class="message" style="vertical-align: middle;">${data.msg}</span>`;
+            }
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+
+        socket.on('user_color', function(data) {
+            if (data.username === username) {
+                userColor = data.color;
+                var userInfo = document.getElementById('user-info');
+                var colorBox = document.createElement('div');
+                colorBox.className = 'color-box';
+                colorBox.style.backgroundColor = userColor;
+                var userNameSpan = document.createElement('span');
+                userNameSpan.innerText = `${username} (sen)`;
+                userInfo.appendChild(colorBox);
+                userInfo.appendChild(userNameSpan);
+            }
+        });
+
+        socket.on('typing', function(data) {
+            var typingIndicator = document.getElementById('typing-indicator');
+            if (data.usernames.length > 0) {
+                typingIndicator.innerHTML = data.usernames.join(', ') + ' yazıyor...';
+            } else {
+                typingIndicator.innerHTML = '';
+            }
+        });
+
+        document.getElementById('message').addEventListener('keypress', function() {
+            if (!typing) {
+                typing = true;
+                socket.emit('typing', {'username': username});
+                timeout = setTimeout(stopTyping, 3000);
+            } else {
+                clearTimeout(timeout);
+                timeout = setTimeout(stopTyping, 3000);
+            }
+        });
+
+        function stopTyping() {
+            typing = false;
+            socket.emit('stop typing', {'username': username});
+        }
+
+        document.getElementById('chat-form').onsubmit = function(e) {
+            e.preventDefault();
+            var message = document.getElementById('message').value;
+            if (selectedImage) {
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                    socket.emit('message', {'msg': message, 'image': evt.target.result});
+                    document.getElementById('message').value = '';
+                    document.getElementById('image-preview').style.display = 'none';
+                    selectedImage = null;
+                };
+                reader.readAsDataURL(selectedImage);
+            } else if (selectedVideo) {
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                    socket.emit('message', {'msg': message, 'video': evt.target.result});
+                    document.getElementById('message').value = '';
+                    document.getElementById('video-preview').style.display = 'none';
+                    selectedVideo = null;
+                };
+                reader.readAsDataURL(selectedVideo);
+            } else {
+                socket.emit('message', {'msg': message});
+                document.getElementById('message').value = '';
+            }
+            stopTyping();
+        };
+
+        document.getElementById('camera-button').onclick = function() {
+            document.getElementById('media-input').click();
+        };
+
+        document.getElementById('media-input').onchange = function(e) {
+            var file = e.target.files[0];
+            if (file) {
+                var fileType = file.type.split('/')[0];
+                if (fileType === 'image') {
+                    selectedImage = file;
+                    selectedVideo = null;
+                    var reader = new FileReader();
+                    reader.onload = function(evt) {
+                        var imagePreview = document.getElementById('image-preview');
+                        imagePreview.src = evt.target.result;
+                        imagePreview.style.display = 'block';
+                        document.getElementById('video-preview').style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                } else if (fileType === 'video') {
+                    selectedVideo = file;
+                    selectedImage = null;
+                    var reader = new FileReader();
+                    reader.onload = function(evt) {
+                        var videoPreview = document.getElementById('video-preview');
+                        videoPreview.src = evt.target.result;
+                        videoPreview.style.display = 'block';
+                        document.getElementById('image-preview').style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        };
+
+        window.onbeforeunload = function() {
+            socket.emit('leave', {'room': room, 'username': username});
+        };
+    </script>
+</body>
+</html>

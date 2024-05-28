@@ -1,0 +1,250 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box {
+    background-color: #000000; /* Siyah */
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    width: 250px;
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 90%; /* Genişliği ayarladık */
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #333; /* Koyu gri */
+    color: #fff;
+    font-size: 16px; /* Font boyutunu artırdık */
+}
+
+button {
+    background-color: #007bff; /* Mavi */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.chat-container {
+    background-color: #333; /* Koyu gri */
+    border-radius: 10px;
+    width: 600px; /* Genişliği artırdık */
+    height: 800px; /* Yüksekliği artırdık */
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box; /* Ekstra */
+    position: relative;
+}
+
+.chat-header {
+    color: rgb(255, 255, 255);
+    width: 100%;
+    text-align: right;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px; /* Font boyutunu artırdık */
+}
+
+.chat-box {
+    flex: 1;
+    width: 100%;
+    padding: 10px;
+    overflow-y: auto; /* Kaydırma çubuğu için */
+    background-color: #444; /* Daha açık koyu gri */
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box; /* Ekstra */
+}
+
+/* Scrollbar styling */
+.chat-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background: #444; /* Scrollbar track color */
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background-color: #555; /* Scrollbar thumb color */
+    border-radius: 10px;
+    border: 2px solid #444; /* Border around the thumb */
+}
+
+#chat-form {
+    display: flex;
+    width: 100%;
+    align-items: center; /* Mesaj kutusunu ve gönder butonunu hizalamak için */
+    position: relative;
+}
+
+#message {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #555; /* Daha açık koyu gri */
+    color: white;
+    box-sizing: border-box; /* Ekstra */
+    height: 38px; /* Yüksekliği ayarladık */
+}
+
+#camera-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 50px; /* Mesaj kutusunun sağında ve gönder butonunun solunda */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#camera-button img {
+    width: 24px;
+    height: 24px;
+}
+
+#send-button {
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    height: 38px; /* Yüksekliği mesaj kutusuyla eşitledik */
+    box-sizing: border-box; /* Ekstra */
+    vertical-align: middle; /* Dikey hizalama */
+    position: absolute;
+    right: 0; /* Mesaj kutusunun sağında */
+}
+
+#send-button:hover {
+    background-color: #0056b3;
+}
+
+#image-preview {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: none; /* Başlangıçta görünmez */
+}
+
+#video-preview {
+    max-width: 200px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: none; /* Başlangıçta görünmez */
+}
+
+.chat-box div {
+    margin-bottom: 10px;
+    font-size: 16px; /* Font size for messages */
+    font-weight: bold; /* Font weight for messages */
+    position: relative; /* For positioning username over images */
+    display: flex; /* Kullanıcı adı ve mesajı aynı satıra yerleştirir */
+    align-items: center; /* Kullanıcı adı ve mesajı ortalar */
+}
+
+.chat-box div strong {
+    font-weight: bold;
+    font-size: 16px; /* Ensure username is the same size as message text */
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 2px 5px;
+    border-radius: 5px;
+    color: #fff; /* White text for better visibility */
+    margin-right: 5px; /* Kullanıcı adı ile mesaj arasında boşluk bırakır */
+}
+
+.chat-box div strong.system {
+    font-weight: bold;
+    font-size: 18px; /* Font size for system messages */
+}
+
+.chat-box div span.colon {
+    margin-right: 5px; /* İki nokta ile mesaj arasında boşluk bırakır */
+    font-weight: bold; /* İki noktayı kalın yapar */
+    display: inline; /* İki noktayı inline yapar */
+    align-self: center; /* İki noktayı ortalar */
+}
+
+.chat-box div span.message {
+    color: white; /* Mesaj metni beyaz renkte */
+    word-wrap: break-word; /* Mesajların kutuyu aşmasını engeller */
+    display: inline; /* Mesajı inline yapar */
+    align-self: center; /* Mesajı ortalar */
+    line-height: 1.5; /* Satır yüksekliğini ayarlar */
+}
+
+.chat-box div img {
+    max-width: 200px;
+    border-radius: 5px;
+    display: block;
+    margin-left: 5px; /* Kullanıcı adından biraz boşluk bırakır */
+    align-self: center; /* Resmi ortalar */
+}
+
+.chat-box div video {
+    max-width: 200px;
+    border-radius: 5px;
+    display: block;
+    margin-left: 5px; /* Kullanıcı adından biraz boşluk bırakır */
+    align-self: center; /* Videoyu ortalar */
+}
+
+/* Kullanıcı ismi ve renk kutusu */
+.user-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.user-info .color-box {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.user-info span {
+    color: white;
+    font-weight: bold;
+}
+
+/* Mobil cihazlar için düzenleme */
+@media (max-width: 768px) {
+    .user-info {
+        top: 10px;
+        right: 10px;
+        left: auto;
+    }
+}
+
+#typing-indicator {
+    font-style: italic;
+    color: #aaa;
+}

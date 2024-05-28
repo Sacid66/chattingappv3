@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h2>Oda Oluştur</h2>
+            <form action="/create_room" method="POST">
+                <input type="text" name="username" placeholder="İsmini gir" required>
+                <button type="submit">Oluştur</button>
+            </form>
+        </div>
+        <div class="box">
+            <h2>Odaya Katıl</h2>
+            <form action="/join_room" method="POST">
+                <input type="text" name="username" placeholder="İsmini gir" required>
+                <input type="text" name="room_id" placeholder="Oda numarasını gir" required>
+                <button type="submit">Katıl</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
