@@ -5,7 +5,7 @@ import random
 import string
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Configurations
 app.config['SECRET_KEY'] = 'your_secret_key'

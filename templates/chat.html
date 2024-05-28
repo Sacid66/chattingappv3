@@ -29,7 +29,8 @@
         <!-- Kullanıcı bilgileri burada dinamik olarak eklenecek -->
     </div>
     <script>
-        var socket = io();
+        var socket = io.connect(window.location.protocol + '//' + document.domain + ':' + window.location.port);
+
         var room = "{{ room_id }}";
         var username = "{{ username }}";
         var userColor;
