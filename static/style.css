@@ -15,7 +15,7 @@ body {
 }
 
 .box {
-    background-color: #000000; /* Siyah */
+    background-color: #000000; 
     color: white;
     border-radius: 10px;
     padding: 20px;
@@ -25,18 +25,18 @@ body {
 }
 
 input[type="text"] {
-    width: 90%; /* Genişliği ayarladık */
+    width: 90%; 
     padding: 10px;
     margin: 10px 0;
     border-radius: 10px;
     border: 1px solid #ccc;
-    background-color: #333; /* Koyu gri */
+    background-color: #333; 
     color: #fff;
-    font-size: 16px; /* Font boyutunu artırdık */
+    font-size: 16px; 
 }
 
 button {
-    background-color: #007bff; /* Mavi */
+    background-color: #007bff; 
     color: white;
     border: none;
     padding: 10px;
@@ -45,14 +45,14 @@ button {
 }
 
 .chat-container {
-    background-color: #333; /* Koyu gri */
+    background-color: #333;
     border-radius: 10px;
-    width: 600px; /* Genişliği artırdık */
-    height: 800px; /* Yüksekliği artırdık */
+    width: 600px; 
+    height: 800px; 
     display: flex;
     flex-direction: column;
     padding: 10px;
-    box-sizing: border-box; /* Ekstra */
+    box-sizing: border-box; 
     position: relative;
 }
 
@@ -62,39 +62,39 @@ button {
     text-align: right;
     font-weight: bold;
     margin-bottom: 10px;
-    font-size: 18px; /* Font boyutunu artırdık */
+    font-size: 18px; 
 }
 
 .chat-box {
     flex: 1;
     width: 100%;
     padding: 10px;
-    overflow-y: auto; /* Kaydırma çubuğu için */
-    background-color: #444; /* Daha açık koyu gri */
+    overflow-y: auto; 
+    background-color: #444; 
     border-radius: 10px;
     margin-bottom: 10px;
-    box-sizing: border-box; /* Ekstra */
+    box-sizing: border-box; 
 }
 
-/* Scrollbar styling */
+
 .chat-box::-webkit-scrollbar {
     width: 8px;
 }
 
 .chat-box::-webkit-scrollbar-track {
-    background: #444; /* Scrollbar track color */
+    background: #444; 
 }
 
 .chat-box::-webkit-scrollbar-thumb {
-    background-color: #555; /* Scrollbar thumb color */
+    background-color: #555;
     border-radius: 10px;
-    border: 2px solid #444; /* Border around the thumb */
+    border: 2px solid #444; 
 }
 
 #chat-form {
     display: flex;
     width: 100%;
-    align-items: center; /* Mesaj kutusunu ve gönder butonunu hizalamak için */
+    align-items: center; 
     position: relative;
 }
 
@@ -103,10 +103,10 @@ button {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #555; /* Daha açık koyu gri */
+    background-color: #555; 
     color: white;
-    box-sizing: border-box; /* Ekstra */
-    height: 38px; /* Yüksekliği ayarladık */
+    box-sizing: border-box; 
+    height: 38px; 
 }
 
 #camera-button {
@@ -114,7 +114,7 @@ button {
     border: none;
     cursor: pointer;
     position: absolute;
-    right: 50px; /* Mesaj kutusunun sağında ve gönder butonunun solunda */
+    right: 50px; 
     height: 100%;
     display: flex;
     align-items: center;
@@ -133,11 +133,11 @@ button {
     color: white;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
-    height: 38px; /* Yüksekliği mesaj kutusuyla eşitledik */
-    box-sizing: border-box; /* Ekstra */
-    vertical-align: middle; /* Dikey hizalama */
+    height: 38px; 
+    box-sizing: border-box; 
+    vertical-align: middle; 
     position: absolute;
-    right: 0; /* Mesaj kutusunun sağında */
+    right: 0; 
 }
 
 #send-button:hover {
@@ -149,72 +149,72 @@ button {
     max-height: 100px;
     border-radius: 5px;
     margin-bottom: 10px;
-    display: none; /* Başlangıçta görünmez */
+    display: none; 
 }
 
 #video-preview {
     max-width: 200px;
     border-radius: 5px;
     margin-bottom: 10px;
-    display: none; /* Başlangıçta görünmez */
+    display: none; 
 }
 
 .chat-box div {
     margin-bottom: 10px;
-    font-size: 16px; /* Font size for messages */
-    font-weight: bold; /* Font weight for messages */
-    position: relative; /* For positioning username over images */
-    display: flex; /* Kullanıcı adı ve mesajı aynı satıra yerleştirir */
-    align-items: center; /* Kullanıcı adı ve mesajı ortalar */
+    font-size: 16px; 
+    font-weight: bold; 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
 }
 
 .chat-box div strong {
     font-weight: bold;
-    font-size: 16px; /* Ensure username is the same size as message text */
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    font-size: 16px; 
+    background: rgba(0, 0, 0, 0.5); 
     padding: 2px 5px;
     border-radius: 5px;
-    color: #fff; /* White text for better visibility */
-    margin-right: 5px; /* Kullanıcı adı ile mesaj arasında boşluk bırakır */
+    color: #fff; 
+    margin-right: 5px; 
 }
 
 .chat-box div strong.system {
     font-weight: bold;
-    font-size: 18px; /* Font size for system messages */
+    font-size: 18px;
 }
 
 .chat-box div span.colon {
-    margin-right: 5px; /* İki nokta ile mesaj arasında boşluk bırakır */
-    font-weight: bold; /* İki noktayı kalın yapar */
-    display: inline; /* İki noktayı inline yapar */
-    align-self: center; /* İki noktayı ortalar */
+    margin-right: 5px; 
+    font-weight: bold; 
+    display: inline; 
+    align-self: center; 
 }
 
 .chat-box div span.message {
-    color: white; /* Mesaj metni beyaz renkte */
-    word-wrap: break-word; /* Mesajların kutuyu aşmasını engeller */
-    display: inline; /* Mesajı inline yapar */
-    align-self: center; /* Mesajı ortalar */
-    line-height: 1.5; /* Satır yüksekliğini ayarlar */
+    color: white; 
+    word-wrap: break-word; 
+    display: inline; 
+    align-self: center; 
+    line-height: 1.5; 
 }
 
 .chat-box div img {
     max-width: 200px;
     border-radius: 5px;
     display: block;
-    margin-left: 5px; /* Kullanıcı adından biraz boşluk bırakır */
-    align-self: center; /* Resmi ortalar */
+    margin-left: 5px;
+    align-self: center; 
 }
 
 .chat-box div video {
     max-width: 200px;
     border-radius: 5px;
     display: block;
-    margin-left: 5px; /* Kullanıcı adından biraz boşluk bırakır */
-    align-self: center; /* Videoyu ortalar */
+    margin-left: 5px; 
+    align-self: center; 
 }
 
-/* Kullanıcı ismi ve renk kutusu */
+
 .user-info {
     position: absolute;
     top: 10px;
@@ -235,7 +235,7 @@ button {
     font-weight: bold;
 }
 
-/* Mobil cihazlar için düzenleme */
+
 @media (max-width: 768px) {
     .user-info {
         top: 10px;
