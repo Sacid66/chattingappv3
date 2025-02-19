@@ -7,10 +7,10 @@ import string
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-# Configurations
+
 app.config['SECRET_KEY'] = 'your_secret_key'
 
-# Session and SocketIO setup
+
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
 rooms = {}
